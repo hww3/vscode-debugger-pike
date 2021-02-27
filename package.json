@@ -1,0 +1,101 @@
+{
+  "name": "pike-debugger",
+  "displayName": "Pike Debugger",
+  "version": "0.5.0",
+  "publisher": "hww3",
+  "description": "Debugging support for the Pike programming language",
+  "author": {
+    "name": "hww3",
+    "email": "william@welliver.org"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pike",
+    "debugger",
+    "debug",
+    "adapter"
+  ],
+  "categories": [
+    "Debuggers"
+  ],
+  "private": true,
+  "repository": {
+    "type": "hg",
+    "url": "https://hg.sr.ht/~hww3/vscode-debugger-pike"
+  },
+  "bugs": {},
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "main": "./out/extension",
+  "engines": {
+    "vscode": "^1.50.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^8.9.3",
+    "@types/vscode": "^1.1.37",
+    "typescript": "^3.1.6",
+    "vsce": "1.54.0",
+    "vscode-test": "^1.5.1"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "dependencies": {
+    "vscode-debugadapter": "1.33.0",
+    "vscode-nls": "4.0.0"
+  },
+  "contributes": {
+    "breakpoints": [
+      {
+        "language": "pike"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "pike",
+        "runtime": "pike",
+        "languages": [
+          "pike"
+        ],
+        "label": "Pike Debugger",
+        "initialConfigurations": [
+          {
+            "type": "pike",
+            "request": "attach",
+            "name": "attach",
+            "debugServer": 4711
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Pike: Attach",
+            "description": "Attach to the launched adapter listening on port `debugServer`.",
+            "body": {
+              "type": "pike",
+              "request": "attach",
+              "name": "attach",
+              "debugServer": "4711"
+            }
+          }
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Pike Debugger",
+      "properties": {
+        "pike.debugger.autoattach": {
+          "type": "boolean",
+          "default": false,
+          "description": "Auto-attach a debugger when starting pike with debugger options through the VS Code terminal."
+        }
+      }
+    }
+  }
+}
